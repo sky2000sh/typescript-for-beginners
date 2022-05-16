@@ -1,0 +1,73 @@
+{
+    /*
+    생성순서
+    1. npm install -g npm@_._._ 버전으로 npm을 설치 (또는 최신으로 설치해도 무관)
+    2. 터미널에서 cd를 통해 해당 프로젝트 폴더로 들어가서 npm init -y 치면 package.json 파일이 생성된다.
+    3. 실습용으로는 package.json 내의 main을 지우고 “test”도  지운다.
+    4. 다시 터미널 또는 VSCode 터미널에서 해당 프로젝트 폴더로 들어가서 npm i -D typescript 치면 D를 입력함으로써, 타입스크립트가 devDependencies에 설치가 된다.
+    5. 그 후 실습용으로는 src라는 이름의 새폴더를 그 프로젝트 폴더 내 생성하고 그 안에 index.ts 파일을 생성
+    6. 실습용으로는 프로젝트 폴더 내 tsconfig.json 파일을 생성한다. (또는 터미널에서 touch tsconfig.json 입력하기)
+    7. 이제 이 tsconfig.json에서 환경을 만들어준다.
+    8. 특별히 tsconfig.json 내의 outDir 환경을 만들고 “build” 명령어가 되었다면 package.json 파일 내에 “script“ 내에 "build" : "tsc”라고 입력함으로써 build명령어가 tsc를 작동시킬 수 있도록 해준다.
+    9. 그럼 build라는 (빨간) 폴더가 생성되면서 그 안에 자바스크립트로 컴파일 변환이 된다.
+    */
+    
+    "include": ["src"],
+
+    // complierOptions의 outDir => 자바스크립트 파일이 생성될 디렉토리를 지정한다.
+    "compilerOptions": {
+        "outDir": "build",
+
+        /*
+        "target" => 어떤 버전의 자바스크립트로 컴파일할지 타입스크립트에 알려준다.
+        "target": "ES3"를 npm run build하면 index.js에는 var hello = function () { return "hi"; }; 로써,
+        자바스크립트 ES3버전의 컴파일을 통해 var 변수와 function 함수를 사용함을 알 수 있다.
+        그러므로,
+        "target": "ES3"를 "target": "ES6"로 바꿔서 다시 npm run build하면
+        ES6버전에 맞게 자바스크립트로 변환이 된다.
+        "target": "ES6"  // const hello = () => "hi";
+        */
+        "target": "ES6",
+
+        /*
+        class Block {
+            constructor(private data: string) {}
+                static hello() {
+                    return "hi";
+                }
+        }
+        */
+
+        // to =>
+        /*
+        class Block {
+            constructor(data) {
+                this.data = data;
+            }
+            static hello() {
+                return "hi";
+            }
+        }
+        */
+
+        /*
+        lib => 목표로 하는 실행환경을 나타낸다.
+        해당 자바스크립트 코드가 어디에서(어떤 버전이 그 환경에서) 동작할지를 알려준다는 의미
+        DOM = 브라우저
+        즉, ES6 버전의 DOM(브라우저) 환경을 위한 코드를 모두 미리 갖추고 알려준다는 의미
+        여기에서 DOM을 지우면 ES6버전이 어떤 환경을 위한 코드지원을 할지를 모르게된다.
+        코드가 동작하는 환경에 따라, 타입스크립트는 기본적으로 API의 타입을 알기에, 타입에 대해 알려준다.
+        DOM을 사용하면 localStorage, document, window 코딩 후 .다음에 무수한 코드와 런타임을 사용할 수 있다.
+        */        
+        //"lib": ["ES6", "DOM"],
+        "lib": ["ES6"],
+
+        "strict": true,
+
+        //"allowJs": true,
+
+        "esModuleInterop": true,
+
+        "module": "CommonJS",
+    }
+}
